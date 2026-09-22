@@ -4,6 +4,10 @@ Replace `https://your-site.com` with your site. The endpoint and access keys com
 
 Endpoint: `https://your-site.com/wp-json/itx-analytics/v1/mcp`
 
+## The setup prompt (Claude Code, Cursor, Codex, agents)
+
+Create an access key on the settings card and copy the **setup prompt** it shows. Paste it into the tool; it contains the endpoint, the header and instructions for each tool, and ends by calling `get_site_info` to confirm. Everything below is the manual equivalent.
+
 ## claude.ai (web) and Claude Desktop
 
 1. Settings → Connectors → **Add custom connector**.

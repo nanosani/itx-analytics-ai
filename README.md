@@ -31,7 +31,11 @@ Two ways to sign in:
 
 Every connection acts as a WordPress user who can view the dashboard. Access is off by default, keys and connected apps are listed on the card and can be revoked there. Hosted assistants need HTTPS (WordPress only issues application passwords and OAuth over HTTPS).
 
-## 2. Claude Code plugin
+## 2. The fastest way: one setup prompt
+
+Click **Create access key** on the settings card. It shows a *setup prompt*. Paste that prompt into Claude Code, Cursor, Codex or any AI tool that can edit its own configuration: the tool adds the MCP server itself, reloads, calls `get_site_info` and confirms with your site name. No config files to touch.
+
+## 3. Claude Code plugin (adds the analysis skills)
 
 ```bash
 claude plugin marketplace add nanosani/itx-analytics-ai
@@ -53,7 +57,7 @@ You are asked for the endpoint URL and an access key (both from the settings car
 
 Try: *"How did the site do this week?"*, *"Why did traffic drop on Tuesday?"*, *"Which posts should I update?"*, *"How much traffic do we get from ChatGPT?"*
 
-## 3. Other clients
+## 4. Other clients
 
 See [docs/clients.md](docs/clients.md) for claude.ai, Claude Desktop, ChatGPT, Cursor, Codex, VS Code and generic JSON configuration, and [docs/tools.md](docs/tools.md) for every tool, resource and prompt the server exposes.
 
