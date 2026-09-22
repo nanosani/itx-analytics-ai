@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Ask an AI assistant about your WordPress site's analytics. Skills and MCP configuration for ITX Analytics.",
-    "version": "0.32.2"
+    "version": "0.32.3"
   },
   "plugins": [
     {

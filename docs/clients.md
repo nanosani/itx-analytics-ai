@@ -54,7 +54,7 @@ claude mcp add --transport http itx-analytics "https://your-site.com/wp-json/itx
 cmdc mcp add --transport http --header "Authorization: Basic <ACCESS-KEY>" itx-analytics "https://your-site.com/wp-json/itx-analytics/v1/mcp/key"
 ```
 
-(`cmd` on macOS/Linux.) Use the `/mcp/key` URL: with the OAuth URL, Command Code's pre-flight probe starts a browser sign-in and leaves an `oauth` block in the config.
+(`cmd` on macOS/Linux.) Command Code checks the site's `/.well-known` OAuth documents whatever URL you give it, so it may still start a browser sign-in. Either is fine: click **Allow** in the browser (since 0.32.3 the key URL is accepted there too), or cancel and delete the `oauth` block it wrote into `~/.commandcode/projects/<slug>/mcp.json` so the header is used.
 
 ## Cursor
 
@@ -113,6 +113,6 @@ curl -X POST https://your-site.com/wp-json/itx-analytics/v1/mcp/key \
 - **401 with `WWW-Authenticate`** — no or bad credentials. Create a new access key, or reconnect the OAuth client.
 - **401 on a site with an access key that should work** — some hosts strip the `Authorization` header before PHP sees it. Add to the site's `.htaccess`, above the WordPress block: `RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]`. On nginx + PHP-FPM make sure `fastcgi_pass_header Authorization;` is set.
 - **404 from the endpoint** — AI access is switched off on the settings card, or pretty permalinks are off (then use `?rest_route=/itx-analytics/v1/mcp`).
-- **A CLI opens a browser or says "authentication pending" although you gave it a key** — it probed the OAuth URL. Remove the server, re-add it with the `/mcp/key` URL and the header, and delete any `oauth` block it wrote into its config.
+- **A CLI opens a browser or says "authentication pending" although you gave it a key** — it found the site's OAuth documents. Simplest: complete the browser sign-in and click Allow. Otherwise delete the `oauth` block it wrote into its config; the stored header then authenticates.
 - **OAuth never completes** — the site must be HTTPS; the assistant's redirect URL must be https or localhost; check that `/.well-known/oauth-authorization-server` on your domain returns JSON (a security plugin or CDN rule may block dot-paths).
 - **Tools list is short** — the free edition has the core tools; page reports, journeys, e-commerce and the write tools are Pro.
