@@ -2,7 +2,10 @@
 
 Replace `https://your-site.com` with your site. The endpoint and access keys come from WordPress → ITX Analytics → Settings → Connect an AI assistant.
 
-Endpoint: `https://your-site.com/wp-json/itx-analytics/v1/mcp`
+Two URLs for the same server:
+
+- `https://your-site.com/wp-json/itx-analytics/v1/mcp` — for hosted assistants that sign in with OAuth (claude.ai, Claude Desktop, ChatGPT). Its 401 advertises the OAuth server.
+- `https://your-site.com/wp-json/itx-analytics/v1/mcp/key` — for tools that send an access key. Same tools, same data; its 401 never mentions OAuth, so CLIs that probe the URL before storing the key (Command Code, some Cursor builds) do not open a sign-in browser. The setup prompt and the snippets on the settings card use this one.
 
 ## The setup prompt (Claude Code, Cursor, Codex, agents)
 
@@ -36,7 +39,7 @@ claude plugin install itx-analytics@itx-analytics-ai
 or add the server directly with an access key:
 
 ```bash
-claude mcp add --transport http itx-analytics "https://your-site.com/wp-json/itx-analytics/v1/mcp" --header "Authorization: Basic <ACCESS-KEY>"
+claude mcp add --transport http --header "Authorization: Basic <ACCESS-KEY>" itx-analytics "https://your-site.com/wp-json/itx-analytics/v1/mcp/key"
 ```
 
 Or with OAuth (no key; Claude Code opens the browser on first use):
@@ -44,6 +47,14 @@ Or with OAuth (no key; Claude Code opens the browser on first use):
 ```bash
 claude mcp add --transport http itx-analytics "https://your-site.com/wp-json/itx-analytics/v1/mcp"
 ```
+
+## Command Code
+
+```bash
+cmdc mcp add --transport http --header "Authorization: Basic <ACCESS-KEY>" itx-analytics "https://your-site.com/wp-json/itx-analytics/v1/mcp/key"
+```
+
+(`cmd` on macOS/Linux.) Use the `/mcp/key` URL: with the OAuth URL, Command Code's pre-flight probe starts a browser sign-in and leaves an `oauth` block in the config.
 
 ## Cursor
 
@@ -53,7 +64,7 @@ claude mcp add --transport http itx-analytics "https://your-site.com/wp-json/itx
 {
   "mcpServers": {
     "itx-analytics": {
-      "url": "https://your-site.com/wp-json/itx-analytics/v1/mcp",
+      "url": "https://your-site.com/wp-json/itx-analytics/v1/mcp/key",
       "headers": { "Authorization": "Basic <ACCESS-KEY>" }
     }
   }
@@ -68,7 +79,7 @@ Without `headers`, Cursor runs the OAuth flow instead.
 
 ```toml
 [mcp_servers.itx-analytics]
-url = "https://your-site.com/wp-json/itx-analytics/v1/mcp"
+url = "https://your-site.com/wp-json/itx-analytics/v1/mcp/key"
 http_headers = { Authorization = "Basic <ACCESS-KEY>" }
 ```
 
@@ -79,7 +90,7 @@ http_headers = { Authorization = "Basic <ACCESS-KEY>" }
   "servers": {
     "itx-analytics": {
       "type": "http",
-      "url": "https://your-site.com/wp-json/itx-analytics/v1/mcp",
+      "url": "https://your-site.com/wp-json/itx-analytics/v1/mcp/key",
       "headers": { "Authorization": "Basic <ACCESS-KEY>" }
     }
   }
@@ -91,7 +102,7 @@ http_headers = { Authorization = "Basic <ACCESS-KEY>" }
 ## Scripts and curl
 
 ```bash
-curl -X POST https://your-site.com/wp-json/itx-analytics/v1/mcp \
+curl -X POST https://your-site.com/wp-json/itx-analytics/v1/mcp/key \
   -H "Authorization: Basic <ACCESS-KEY>" \
   -H "Content-Type: application/json" \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"get_overview","arguments":{"period":"last_7_days"}}}'
@@ -102,5 +113,6 @@ curl -X POST https://your-site.com/wp-json/itx-analytics/v1/mcp \
 - **401 with `WWW-Authenticate`** — no or bad credentials. Create a new access key, or reconnect the OAuth client.
 - **401 on a site with an access key that should work** — some hosts strip the `Authorization` header before PHP sees it. Add to the site's `.htaccess`, above the WordPress block: `RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]`. On nginx + PHP-FPM make sure `fastcgi_pass_header Authorization;` is set.
 - **404 from the endpoint** — AI access is switched off on the settings card, or pretty permalinks are off (then use `?rest_route=/itx-analytics/v1/mcp`).
+- **A CLI opens a browser or says "authentication pending" although you gave it a key** — it probed the OAuth URL. Remove the server, re-add it with the `/mcp/key` URL and the header, and delete any `oauth` block it wrote into its config.
 - **OAuth never completes** — the site must be HTTPS; the assistant's redirect URL must be https or localhost; check that `/.well-known/oauth-authorization-server` on your domain returns JSON (a security plugin or CDN rule may block dot-paths).
 - **Tools list is short** — the free edition has the core tools; page reports, journeys, e-commerce and the write tools are Pro.

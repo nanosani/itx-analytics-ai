@@ -51,6 +51,7 @@ Filters (`filters` object): `country`, `device` (desktop/mobile/tablet), `ref_ty
 
 ## Protocol notes
 
+- Two URLs: `…/mcp` (401 advertises OAuth discovery) and `…/mcp/key` (401 challenges Basic only, for key-based tools). Same server, same auth rules.
 - Transport: Streamable HTTP, stateless (no `Mcp-Session-Id`, GET returns 405, DELETE 204). Protocol versions 2025-06-18, 2025-03-26, 2024-11-05; JSON-RPC batches accepted.
 - Auth: `Authorization: Basic <application password>` or `Authorization: Bearer <OAuth token>`. A 401 carries `WWW-Authenticate: Bearer … resource_metadata="…"` for OAuth discovery.
 - OAuth 2.1: `/.well-known/oauth-protected-resource`, `/.well-known/oauth-authorization-server`, dynamic client registration, authorization code + PKCE (S256), refresh-token rotation, revocation. Scopes `analytics:read`, `analytics:write`.

@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Ask an AI assistant about your WordPress site's analytics. Skills and MCP configuration for ITX Analytics.",
-    "version": "0.32.0"
+    "version": "0.32.2"
   },
   "plugins": [
     {
       "name": "itx-analytics",
       "source": "./plugins/itx-analytics",
       "description": "Connects Claude Code to your ITX Analytics site (MCP) and adds analysis skills: weekly review, what changed, content to refresh, attribution, page review, e-commerce health, custom queries.",
-      "version": "0.32.0",
+      "version": "0.32.2",
       "author": { "name": "Itechtics" },
       "homepage": "https://github.com/nanosani/itx-analytics-ai",
       "license": "MIT",

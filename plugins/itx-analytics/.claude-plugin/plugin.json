@@ -1,7 +1,7 @@
 {
   "name": "itx-analytics",
   "displayName": "ITX Analytics",
-  "version": "0.32.0",
+  "version": "0.32.2",
   "description": "Ask Claude about your site's traffic. Connects to the ITX Analytics MCP endpoint on your WordPress site and adds analysis skills.",
   "author": { "name": "Itechtics", "url": "https://github.com/nanosani" },
   "homepage": "https://github.com/nanosani/itx-analytics-ai",
@@ -12,7 +12,7 @@
     "mcp_url": {
       "type": "string",
       "title": "ITX Analytics MCP endpoint",
-      "description": "From WordPress → ITX Analytics → Settings → Connect an AI assistant. Looks like https://your-site.com/wp-json/itx-analytics/v1/mcp",
+      "description": "From WordPress → ITX Analytics → Settings → Connect an AI assistant. Looks like https://your-site.com/wp-json/itx-analytics/v1/mcp/key",
       "required": true
     },
     "access_key": {
