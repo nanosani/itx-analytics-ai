@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "itx-analytics": {
+      "type": "http",
+      "url": "${user_config.mcp_url}",
+      "headers": {
+        "Authorization": "Basic ${user_config.access_key}"
+      }
+    }
+  }
+}
