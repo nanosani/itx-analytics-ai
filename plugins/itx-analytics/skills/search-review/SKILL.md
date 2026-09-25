@@ -23,6 +23,7 @@ Needs ITX Analytics Pro with Google Search Console (or Bing Webmaster Tools) con
 ## Rules
 
 - Brand queries are excluded from opportunities; if the brand share looks wrong, tell the user to set brand terms (Settings → Search consoles).
+- Bing reports weekly totals: its series has one point per week (`series_step: "week"`), and a jump in one week is a real change in Bing traffic, not a daily spike. If the overview says Google is not connected (`google_setup`), pass its message on to the user.
 - Position is an impression-weighted average; lower is better. A position change under 0.5 on few impressions is noise.
 - Query and page tables exclude queries Google anonymises, so they add up to less than the site totals. Do not "find" the missing clicks.
 - Say when numbers are too small to act on (tens of impressions).
