@@ -26,6 +26,14 @@ Call `get_site_info` once. It returns the site name, time zone, edition (free/pr
 | One referrer / country / device / campaign in depth (Pro) | `get_breakdown` |
 | What visitors do, path by path (Pro, last 48 h) | `get_journeys`, `get_flows` |
 | Campaigns, content performance, store, goals, search queries (Pro) | `get_campaigns`, `get_content`, `get_ecommerce`, `get_goals`, `get_search_queries` |
+| Did visitors get what they came for (reference/tool sites) (Pro) | `get_outcomes` — outcome rate and served bounces, not bounce rate |
+| What visitors searched, typed or chose inside an event (Pro) | `get_event_properties` (`event`, optional `prop`) |
+| Where visitors go next, dead ends, for any range (Pro) | `get_page_flow` (with or without `path`) |
+| Real-user speed: LCP, INP, CLS (Pro, when switched on) | `get_web_vitals` |
+| Front-end errors visitors hit (Pro, when switched on) | `get_js_errors` |
+| Is the data complete (late/dropped hits) | `get_tracking_health` |
+| Google index status of top pages (Pro) | `get_index_status` |
+| Site changes that explain a trend (publishes, updates, deploys) | `get_annotations` (also returned by `get_overview` and page reports) |
 | Build a tracked link | `build_utm_link` |
 
 Prefer the fixed report tools for the dashboard's own tables (they match what the user sees) and `query` for everything else.
@@ -42,6 +50,15 @@ Every report tool accepts `period` (`today`, `yesterday`, `last_7_days`, `last_2
 - **bounce rate** — single-page sessions ÷ sessions.
 - **avg. time** — engaged seconds ÷ views (tab visible and the visitor active). Long time + high bounce = a good answer page, not a problem.
 - **ref_type** — channel of the session's first page: direct, search, social, referral, internal, AI. Direct includes privacy browsers and apps that strip referrers.
+
+## Before explaining a change
+
+1. `get_annotations` for the range — a plugin update, a publish, a permalink change or a deploy often explains it.
+2. `get_tracking_health` — if many hits arrived late or were dropped, the server was unreachable and the "drop" may be an artefact.
+
+## Reference and tool sites
+
+A visitor who copies a value and leaves in eight seconds was served. When the owner has defined outcomes, use `get_outcomes`: *outcome rate* and *served bounces* replace bounce rate and time on page as the success measures. Never call a served bounce a failure.
 
 ## Writing the answer
 

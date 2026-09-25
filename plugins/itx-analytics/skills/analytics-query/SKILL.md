@@ -32,6 +32,14 @@ Read `get_schema` once; it lists every family, dimension, metric, filter and val
 | refs | date/week/month/day_of_week, referrer, referrer_url, ref_type | views, visitors | internal excluded unless filtered |
 | tech | date/week/month/day_of_week, device, browser, os | views, visitors | |
 | lang | date/week/month/day_of_week, language | views, visitors | |
+| events | date/week/month/day_of_week, event, event_type, page | events, value_sum | every event type; custom = event_type 100 |
+| props | date/week/month/day_of_week, event, prop, value | prop_count, value_sum | Pro; always filter `event`; value "(all)" = numeric summary |
+| outcomes | date/week/month/day_of_week, page | sessions, outcome_sessions, outcome_rate, bounces, served_bounces, unserved_bounce_rate, outcomes | Pro; page = landing page |
+| search | date/week/month/day_of_week, page, query, search_source | clicks, impressions, ctr, position | Google (1) by default, Bing (2) on request; 16 months |
+| transitions | date/week/month/day_of_week, from_page, to_page | transitions | Pro; "(entrance)" / "(exit)" rows |
+| vitals | date/week/month/day_of_week, page, device, vitals_metric | vitals_samples | Pro; use `get_web_vitals` for p75 |
+| errors | date/week/month/day_of_week, page, error, error_source | js_errors | Pro |
+| delivery | date/week/month/day_of_week | delivered_hits, late_hits, retries, dropped_hits, duplicate_hits, late_rate | tracking health |
 
 Dimensions from different families cannot be mixed (referrer × browser, page × browser). Split into two queries instead.
 

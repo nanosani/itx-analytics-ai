@@ -17,6 +17,9 @@ All tools are read-only unless marked *write*. Every date argument is a UTC day.
 | `get_realtime` | — | Online now, baselines (yesterday/last week/last month at this time), today so far, hourly overlay. Pro adds pages/referrers/countries now, the live feed, trending, new sources, unusual activity, sales. |
 | `query` | `metrics`, `dimensions`, `filters`, dates, `sort`, `limit`, `offset`, `source` | Custom aggregate: rows, totals, scope note, truncated flag. See the `analytics-query` skill. |
 | `get_schema` | — | Families, dimensions, metrics, filters, value names, rules, examples, glossary. |
+| `get_annotations` | dates | Site changes on the timeline: publishes, WordPress/plugin/theme updates, setting changes, deploys, notes (with `kind`). |
+| `add_annotation` *(write)* | `label`, `date`, `color` | Adds a timeline marker. OAuth connections need `analytics:write`. |
+| `get_tracking_health` | `days` | Late, retried, dropped and duplicate hits per day with a verdict (Pro adds JS errors). |
 | `build_utm_link` | `url`, `source`, `medium`, `campaign`, `term`, `content` | A tracked link. |
 
 Filters (`filters` object): `country`, `device` (desktop/mobile/tablet), `ref_type` (direct/search/social/referral/internal/ai), `dow` (1 = Sunday … 7). Pro adds `path`, `post_type`, `author`, `category`, `campaign`, `utm_source`, `utm_medium`.
@@ -33,11 +36,15 @@ Filters (`filters` object): `country`, `device` (desktop/mobile/tablet), `ref_ty
 | `get_content` | dates | Content performance by post, author, category, word count, decay/evergreen. |
 | `get_ecommerce` | dates | Store report: totals, by source/landing/campaign/device/country, product funnel, checkout funnel, abandonment, content that sells, cohorts, coupons, payments. |
 | `get_goals` | dates | Goals with completions; funnels with drop-off. |
-| `get_search_queries` | dates | Search-console queries and pages (when connected). |
-| `get_page_search_queries` | `path` | Queries for one page. |
+| `get_search_queries` | dates, `source` (auto/google/bing) | Queries and pages with clicks, impressions, CTR, position; Google index summary. |
+| `get_page_search_queries` | `path` | Google and Bing queries for one page, plus its index status. |
+| `get_index_status` | `verdict`, `limit` | Google URL Inspection: coverage states and pages not indexed. |
+| `get_event_properties` | `event`, `prop`, dates, `limit` | Custom-event properties for any range: top values, shares, numeric summary, daily series, pages. |
+| `get_outcomes` | dates, `limit` | Outcome rate, served bounces, landing pages. |
+| `get_page_flow` | `path`, `direction`, dates, `limit` | Came from / went to next for a page, or dead ends and busiest steps. |
+| `get_web_vitals` | `path`, `metric`, `device`, dates | Real-user p75 LCP/INP/CLS/FCP/TTFB, pass/fail, failing pages and templates. |
+| `get_js_errors` | `path`, dates, `limit` | Grouped JavaScript errors, pages affected, spikes. |
 | `get_insights` | — | Year in review, all-time totals, popular time, latest/top posts, posting activity, heatmap. |
-| `get_annotations` | dates | Timeline annotations. |
-| `add_annotation` *(write)* | `date`, `label`, `color` | Adds a timeline marker. Needs `analytics:write`. |
 | `create_goal` *(write)* | `name`, `type` (event/url), `match` | Creates a goal. Needs `analytics:write`. |
 
 ## Resources
@@ -47,7 +54,7 @@ Filters (`filters` object): `country`, `device` (desktop/mobile/tablet), `ref_ty
 
 ## Prompts
 
-`weekly_review`, `what_changed`, `content_to_refresh`, `attribution_check`, `page_review` (`path`), `ecommerce_health` — each takes an optional `period`.
+`weekly_review`, `what_changed`, `content_to_refresh`, `attribution_check`, `page_review` (`path`), `outcomes_review`, `site_health_check`, `ecommerce_health` — each takes an optional `period`.
 
 ## Protocol notes
 
