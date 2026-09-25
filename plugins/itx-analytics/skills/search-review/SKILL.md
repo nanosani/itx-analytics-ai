@@ -16,6 +16,7 @@ Needs ITX Analytics Pro with Google Search Console (or Bing Webmaster Tools) con
    - `cannibalization`: two or more pages each taking ≥ 10% of a query's impressions.
    - `declining_pages`, `new_queries`, `rising_queries`, `falling_queries`, `zero_click`.
    - `not_ranking` (visits but no impressions) and `not_indexed`.
+   - For indexing in depth (both engines, reasons, canonicals, blocks, crawl errors): `get_index_status`.
 3. Evidence for the top items: `get_query_report` (which pages rank, share, trend) and `get_page_search_queries` (the page's queries with changes, CTR verdict, competing pages, index status, site visits from search). `get_search_pages` with `filter` (declining, low_ctr, not_indexed) or `sort` for page-level lists.
 4. `get_annotations` for publishes, updates or deploys that line up with a change. A drop across all pages at once points at the site (indexing, speed, an update), one page at a time points at content or competition.
 5. For trends beyond the tools' windows: `query` on the `search` family (by `month`, `query`, `page`) and `search_dims` (by `search_device`, `search_country`, `search_appearance`, one at a time).
