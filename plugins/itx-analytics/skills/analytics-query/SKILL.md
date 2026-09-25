@@ -37,6 +37,7 @@ Read `get_schema` once; it lists every family, dimension, metric, filter and val
 | outcomes | date/week/month/day_of_week, page | sessions, outcome_sessions, outcome_rate, bounces, served_bounces, unserved_bounce_rate, outcomes | Pro; page = landing page |
 | search | date/week/month/day_of_week, page, query, search_source | clicks, impressions, ctr, position | Google (1) by default, Bing (2) on request; 16 months; excludes anonymised queries |
 | search_dims | date/week/month/day_of_week, search_device, search_country, search_appearance | clicks, impressions, ctr, position | Google site totals; one of the three per query (also as filters) |
+| crawl | date/week/month/day_of_week | pages_in_index, crawled_pages, crawl_errors, blocked_by_robots, http_3xx, http_4xx, http_5xx, inbound_links | Bing crawl statistics per day; pages_in_index and inbound_links are daily averages |
 | transitions | date/week/month/day_of_week, from_page, to_page | transitions | Pro; "(entrance)" / "(exit)" rows |
 | vitals | date/week/month/day_of_week, page, device, vitals_metric | vitals_samples | Pro; use `get_web_vitals` for p75 |
 | errors | date/week/month/day_of_week, page, error, error_source | js_errors | Pro |
