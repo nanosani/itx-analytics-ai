@@ -33,6 +33,9 @@ Call `get_site_info` once. It returns the site name, time zone, edition (free/pr
 | Front-end errors visitors hit (Pro, when switched on) | `get_js_errors` |
 | Is the data complete (late/dropped hits) | `get_tracking_health` |
 | Google index status of top pages (Pro) | `get_index_status` |
+| Search performance with changes, brand split, devices, countries (Pro) | `get_search_queries` |
+| SEO work ranked by clicks at stake (Pro) | `get_search_opportunities`, then `get_query_report` / `get_page_search_queries` |
+| Every page's search metrics next to its traffic (Pro) | `get_search_pages` |
 | Site changes that explain a trend (publishes, updates, deploys) | `get_annotations` (also returned by `get_overview` and page reports) |
 | Build a tracked link | `build_utm_link` |
 

@@ -55,6 +55,7 @@ You are asked for the endpoint URL and an access key (both from the settings car
 | `ecommerce-health` | Store scorecard, sources that sell, funnel leaks (Pro). |
 | `analytics-query` | How to write correct `query` calls for custom breakdowns. |
 | `outcomes-review` | Did visitors get what they came for: outcome rate, served bounces, zero-result searches, dead ends. |
+| `search-review` | Search console performance and ranked SEO work: striking distance, low CTR, competing pages, decliners, indexing. |
 | `site-health` | Late/dropped hits, real-user Core Web Vitals, JavaScript errors, index status, site changes. |
 
 Try: *"How did the site do this week?"*, *"Why did traffic drop on Tuesday?"*, *"Which posts should I update?"*, *"How much traffic do we get from ChatGPT?"*

@@ -36,8 +36,11 @@ Filters (`filters` object): `country`, `device` (desktop/mobile/tablet), `ref_ty
 | `get_content` | dates | Content performance by post, author, category, word count, decay/evergreen. |
 | `get_ecommerce` | dates | Store report: totals, by source/landing/campaign/device/country, product funnel, checkout funnel, abandonment, content that sells, cohorts, coupons, payments. |
 | `get_goals` | dates | Goals with completions; funnels with drop-off. |
-| `get_search_queries` | dates, `source` (auto/google/bing) | Queries and pages with clicks, impressions, CTR, position; Google index summary. |
-| `get_page_search_queries` | `path` | Google and Bing queries for one page, plus its index status. |
+| `get_search_queries` | dates, `source` (auto/google/bing); optional `search`, `filter` (branded/unbranded/questions/new/lost/striking/top3/page1), `sort`, `order`, `limit`, `page` | Search overview vs the previous period of equal length: clicks, impressions, CTR, position with changes, daily (or weekly) series, devices, countries, search appearance, brand vs non-brand, question queries, top queries and pages, the CTR curve, index summary. With a filter or search it also lists matching queries. |
+| `get_search_pages` | dates, `source`, `search`, `filter` (declining/improving/low_ctr/not_indexed), `sort`, `order`, `limit`, `page` | Every page with search metrics and changes next to its site views and search-referred views, query count, CTR vs expected for its position, index status. |
+| `get_search_opportunities` | dates, `source` | Ranked SEO work: striking-distance queries with potential clicks, low CTR for the position, pages competing for a query, declining pages, new/rising/falling/zero-click queries, visited-but-invisible content, pages not indexed. |
+| `get_query_report` | `query`, dates, `source` | One query: totals and changes, series, the pages ranking for it with share of impressions (cannibalization flag), brand/question labels. |
+| `get_page_search_queries` | `path`, dates, `source` | One page's search picture: totals and changes, CTR verdict for its position, series, every query with changes, striking-distance queries, competing pages, index status, site visits from search, Bing queries. |
 | `get_index_status` | `verdict`, `limit` | Google URL Inspection: coverage states and pages not indexed. |
 | `get_event_properties` | `event`, `prop`, dates, `limit` | Custom-event properties for any range: top values, shares, numeric summary, daily series, pages. |
 | `get_outcomes` | dates, `limit` | Outcome rate, served bounces, landing pages. |
@@ -54,7 +57,7 @@ Filters (`filters` object): `country`, `device` (desktop/mobile/tablet), `ref_ty
 
 ## Prompts
 
-`weekly_review`, `what_changed`, `content_to_refresh`, `attribution_check`, `page_review` (`path`), `outcomes_review`, `site_health_check`, `ecommerce_health` — each takes an optional `period`.
+`weekly_review`, `what_changed`, `content_to_refresh`, `attribution_check`, `page_review` (`path`), `outcomes_review`, `site_health_check`, `search_review`, `ecommerce_health` — each takes an optional `period`.
 
 ## Protocol notes
 

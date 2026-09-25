@@ -11,7 +11,7 @@ Take the path from the user (accept a full URL; the tools normalize it).
 
 1. Pro: `get_page_report` with the path and `compare: "period"`. It returns totals, trend, sources, countries, devices, scroll depth, an insight (verdict + what stands out), where visitors came from within the site, where they went next, and inbound links.
    Free: `query` with `filters: {page: "/path/"}` and dimensions `date`, `ref_type`, `country`, `device` (one query each), plus `get_events` for scroll milestones.
-2. `get_page_search_queries` (Pro, search console connected) for the queries behind it.
+2. `get_page_search_queries` (Pro, search console connected) with the same dates: its queries with changes, whether its CTR is low for its position, queries close to the top 3, other pages competing for its queries, index status.
 3. If the page is a landing page for a store, `get_ecommerce` (Pro) shows its sales.
 4. Context: `get_pages` for the same period to place it (rank, share of site views).
 
