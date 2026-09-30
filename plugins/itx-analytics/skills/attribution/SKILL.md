@@ -13,6 +13,7 @@ description: Explain where the site's traffic really comes from — channel mix 
 4. AI assistants: `query` with `dimensions: ["referrer"], filters: {ref_type: "ai"}` — ChatGPT, Perplexity, Copilot, Claude, Gemini and the like are classified as AI. Show them by month too.
 5. Campaigns: `query` with `dimensions: ["utm_source","utm_medium","utm_campaign"]` or `get_campaigns` (Pro). Offer `build_utm_link` when a source is untracked.
 6. Pro: `get_breakdown` with `dimension: "ref_host"` for the one host the user cares about; `get_ecommerce` for revenue by source.
+7. Pro 0.37+: `get_acquisition` groups visits and conversions by channel (paid/organic search and social by platform, community, email, AI, referral, direct), campaign, landing page or referrer, first or last touch — see the marketing-review skill.
 
 ## Caveats to state
 
