@@ -34,3 +34,10 @@ Needs ITX Analytics Pro with Google Search Console (or Bing Webmaster Tools) con
 - Scorecard: clicks, impressions, CTR, position with changes; brand share; the data window.
 - What moved and why, with numbers (queries and pages that gained or lost the most).
 - The five highest-value actions, each naming the page, the query, the change (rewrite title/description, add a section answering the query, merge or interlink competing pages, fix indexing) and the clicks at stake.
+
+## Wording and addresses (ITX Analytics 0.40+)
+
+- `get_search_phrasing`: which modifiers ("in cm", "vs", "what is", free, template …) and recurring phrases carry impressions — pick title and heading wording from it.
+- `get_title_suggestions` (optionally with `path`): words a page's searchers use that its title lacks.
+- `get_search_url_issues`: search URLs that redirect, error, have a canonical elsewhere, are noindex, or answer 200 without being a published page. Redirected URLs are already merged into their target in every search report.
+- After changing pages: `get_change_impact` with the date or annotation and the paths; `watch` to keep an eye on them.

@@ -16,3 +16,5 @@ description: Check the technical health behind the numbers — whether hits reac
 ## Output
 
 A short list ordered by impact: what is broken or slow, the evidence, and the fix. Say plainly when a module is switched off and the question cannot be answered yet.
+
+JavaScript errors (0.40+): `get_js_errors` shows the site's own errors; errors from blocked analytics/ad scripts and browser noise are counted in `by_origin` — mention them only as context, not as bugs. Automated traffic (0.38+): `get_automated_traffic` explains what the bot filter removed.
