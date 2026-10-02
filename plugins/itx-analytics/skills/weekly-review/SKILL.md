@@ -9,6 +9,8 @@ Goal: a report the site owner can read in two minutes and act on.
 
 ## Steps
 
+0. Start with `get_site_brief` (ITX Analytics 0.39+): one call covering traffic, channels, pages, search, conversions, anomalies and annotations; drill in below only where it points.
+
 1. `get_site_info` (once per conversation).
 2. `get_overview` for the period with `compare: "period"`. Note views, visitors, sessions, bounce rate, avg. time and their % change.
 3. `get_pages` (`limit: 15`), `get_referrers`, `get_countries` (`limit: 10`), `get_tech` for the same period.

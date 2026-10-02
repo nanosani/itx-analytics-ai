@@ -2,6 +2,17 @@
 
 All tools are read-only unless marked *write*. Every date argument is a UTC day. Report tools take `from`/`to` (YYYY-MM-DD) or `period` (`today`, `yesterday`, `last_7_days`, `last_28_days`, `last_30_days`, `last_90_days`, `this_month`, `last_month`, `this_year`, `last_12_months`); default is the last 28 days. Row limits are capped at 200.
 
+
+## Result shape (0.39+)
+
+Every tool returns:
+
+- `meta` — `from`/`to` (UTC days), `filters`, `source`, `data_until`, `timezone`, `aggregated_at`, `people_only` (automated traffic excluded), `definitions` for the metrics used, `lists` (the list-valued keys), `rows_from` (the key the main list had before 0.39), and `empty` (why `rows` is empty).
+- `totals` where the tool has them.
+- `rows` — the main list.
+
+Invalid arguments return an error naming the fix (unknown argument, missing required value, value outside an enum, bad date) instead of an empty result. Visitors are not additive across rows: use `totals`.
+
 ## Free
 
 | Tool | Arguments | Returns |
@@ -20,6 +31,9 @@ All tools are read-only unless marked *write*. Every date argument is a UTC day.
 | `get_annotations` | dates | Site changes on the timeline: publishes, WordPress/plugin/theme updates, setting changes, deploys, notes (with `kind`). |
 | `add_annotation` *(write)* | `label`, `date`, `color` | Adds a timeline marker. OAuth connections need `analytics:write`. |
 | `get_tracking_health` | `days` | Late, retried, dropped and duplicate hits per day with a verdict (Pro adds JS errors). |
+| `get_site_brief` | dates or `period` (default last 7 days), `compare` | One-call status report: people-only traffic with changes, automated traffic filtered, channels, top pages and referrers, unusual days with explanations, tracking health, annotations; Pro adds conversions, search totals and opportunities. |
+| `get_automated_traffic` | dates | What the automated-traffic filter removed: views, visitors, share, series, reasons, countries, pages, referrers. |
+| `get_visit_log` | `automated` (all/yes/no), `limit`, `offset` | Last ~48 h of visitor-days with automation score and signals. |
 | `build_utm_link` | `url`, `source`, `medium`, `campaign`, `term`, `content` | A tracked link. |
 
 Filters (`filters` object): `country`, `device` (desktop/mobile/tablet), `ref_type` (direct/search/social/referral/internal/ai), `dow` (1 = Sunday … 7). Pro adds `path`, `post_type`, `author`, `category`, `campaign`, `utm_source`, `utm_medium`.
@@ -51,7 +65,7 @@ Filters (`filters` object): `country`, `device` (desktop/mobile/tablet), `ref_ty
 | `get_page_flow` | `path`, `direction`, dates, `limit` | Came from / went to next for a page, or dead ends and busiest steps. |
 | `get_web_vitals` | `path`, `metric`, `device`, dates | Real-user p75 LCP/INP/CLS/FCP/TTFB, pass/fail, failing pages and templates. |
 | `get_js_errors` | `path`, dates, `limit` | Grouped JavaScript errors, pages affected, spikes. |
-| `get_insights` | — | Year in review, all-time totals, popular time, latest/top posts, posting activity, heatmap. |
+| `get_insights` | — | A blog-style year in review (not an analysis — use `get_site_brief`). |
 | `get_marketing_overview` | dates, `compare` (previous_period/previous_year/none), `filters`, `model` (first/last) | Visitors, page views, visits, engaged visits, every conversion event, paying customers and revenue, with % change. |
 | `get_acquisition` | `dimension` (channel, platform, utm_source, utm_medium, utm_campaign, utm_content, utm_term, landing_page, referrer, country, device, date, week), dates, `metrics[]`, `filters{}`, `compare`, `model`, `limit`, `sort` | Rows per dimension value: visits, engaged visits, engagement rate, page views, bounces, avg engaged seconds, conversions per event and per visit, paid, revenue; totals; coverage note for days before per-visit data. |
 | `get_timeseries` | `metric` (visits, engaged_visits, pageviews, bounces, paid, revenue, conversions, or an event name), dates, `interval` (day/week), `filters`, `model` | Zero-filled series and total. |
@@ -61,6 +75,9 @@ Filters (`filters` object): `country`, `device` (desktop/mobile/tablet), `ref_ty
 | `get_search_performance` | dates, `engine` (google/bing/both/auto), `dimension` (query/page/query_page), `query_contains`, `page_contains`, `position_min`, `position_max`, `min_impressions`, `sort`, `order`, `limit`, `compare` | Clicks, impressions, CTR, position rows; both engines summed with a per-engine split. |
 | `get_new_search_queries` | `engine`, `days` (default 7), `limit` | Queries first seen in the stored history within the last N days of delivered data; `reliable` flags short histories. |
 | `get_daily_digest` | `date` (default yesterday) | That day vs the same weekday a week earlier: traffic, conversions, paid, revenue with changes; top channels, referrers, campaigns (with conversions, last touch); top pages; Google/Bing clicks for their latest day; annotations. |
+| `get_change_impact` | `date` or `annotation_id`, `paths[]` (`/blog/*`), `days` (≤ 90), `engine` | Before/after a change against the rest of the site: traffic and search metrics with expected values and effect, per-page rows, queries that moved. |
+| `get_watchlist` | — | Watched pages/queries: last 7 days vs the 7 before, position move, alerts. |
+| `watch` *(write)* | `action` (add/remove), `type`, `value`, `threshold`, `id` | Edit the watchlist. |
 | `create_goal` *(write)* | `name`, `type` (event/url), `match` | Creates a goal. Needs `analytics:write`. |
 
 ## Resources
@@ -74,7 +91,7 @@ Filters (`filters` object): `country`, `device` (desktop/mobile/tablet), `ref_ty
 
 ## Protocol notes
 
-- Every tool result carries `_meta`: dates are UTC calendar days (the dashboard's convention), the site's time zone, when the result was generated and when traffic was last aggregated.
+- Every tool result carries `meta` (see Result shape above).
 
 - Two URLs: `…/mcp` (401 advertises OAuth discovery) and `…/mcp/key` (401 challenges Basic only, for key-based tools). Same server, same auth rules.
 - Transport: Streamable HTTP, stateless (no `Mcp-Session-Id`, GET returns 405, DELETE 204). Protocol versions 2025-06-18, 2025-03-26, 2024-11-05; JSON-RPC batches accepted.
