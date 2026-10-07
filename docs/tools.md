@@ -7,7 +7,7 @@ All tools are read-only unless marked *write*. Every date argument is a UTC day.
 
 Every tool returns:
 
-- `meta` — `from`/`to` (UTC days), `filters`, `source`, `data_until`, `timezone`, `aggregated_at`, `people_only` (automated traffic excluded), `definitions` for the metrics used, `lists` (the list-valued keys), `rows_from` (the key the main list had before 0.39), and `empty` (why `rows` is empty).
+- `meta` — `from`/`to` (UTC days), `filters`, `source`, `data_until`, `timezone`, `aggregated_at`, `people_only` (automated traffic excluded), `definitions` for the metrics used, `lists` (the list-valued keys), `rows_from` (the key the main list had before 0.39), `empty` (why `rows` is empty), and `coverage` (0.40.5) for tools that read data with a start date: `page_flow`, `web_vitals`, `google_search_console` (with `history_import` {done, total, running} while the 16-month import runs) and `bing_webmaster_tools`, each with `since`, a `note`, and `partial` when the requested range starts before `since`. A short history there means new, not broken.
 - `totals` where the tool has them.
 - `rows` — the main list.
 

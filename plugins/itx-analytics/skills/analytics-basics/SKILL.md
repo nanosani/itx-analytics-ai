@@ -59,6 +59,10 @@ Every report tool accepts `period` (`today`, `yesterday`, `last_7_days`, `last_2
 1. `get_annotations` for the range — a plugin update, a publish, a permalink change or a deploy often explains it.
 2. `get_tracking_health` — if many hits arrived late or were dropped, the server was unreachable and the "drop" may be an artefact.
 
+## Short or empty history is not a fault
+
+Read `meta.coverage` before calling a module broken. Page flow and Web Vitals start collecting on install and never cover earlier days; the Search Console history import runs in the background (`history_import` done/total). Report "recorded since <since>" or "import at N of M days — re-run then", not "not collecting".
+
 ## Reference and tool sites
 
 A visitor who copies a value and leaves in eight seconds was served. When the owner has defined outcomes, use `get_outcomes`: *outcome rate* and *served bounces* replace bounce rate and time on page as the success measures. Never call a served bounce a failure.

@@ -32,7 +32,7 @@ Read `get_schema` once; it lists every family, dimension, metric, filter and val
 | refs | date/week/month/day_of_week, referrer, referrer_url, ref_type | views, visitors | internal excluded unless filtered |
 | tech | date/week/month/day_of_week, device, browser, os | views, visitors | |
 | lang | date/week/month/day_of_week, language | views, visitors | |
-| events | date/week/month/day_of_week, event, event_type, page | events, value_sum | every event type; custom = event_type 100 |
+| events | date/week/month/day_of_week, event, event_type, page | events, value_sum | every event type; filter event_type by label or code: scroll 2, outbound click 3, form 4, ecommerce 5, download 6, 404 7, cta 13, custom 100 |
 | props | date/week/month/day_of_week, event, prop, value | prop_count, value_sum | Pro; always filter `event`; value "(all)" = numeric summary |
 | outcomes | date/week/month/day_of_week, page | sessions, outcome_sessions, outcome_rate, bounces, served_bounces, unserved_bounce_rate, outcomes | Pro; page = landing page |
 | search | date/week/month/day_of_week, page, query, search_source | clicks, impressions, ctr, position | Google (1) by default, Bing (2) on request; 16 months; excludes anonymised queries |
