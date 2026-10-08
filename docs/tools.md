@@ -30,7 +30,7 @@ Invalid arguments return an error naming the fix (unknown argument, missing requ
 | `get_schema` | — | Families, dimensions, metrics, filters, value names, rules, examples, glossary. |
 | `get_annotations` | dates | Site changes on the timeline: publishes, WordPress/plugin/theme updates, setting changes, deploys, notes (with `kind`). |
 | `add_annotation` *(write)* | `label`, `date`, `color` | Adds a timeline marker. OAuth connections need `analytics:write`. |
-| `get_tracking_health` | `days` | Late, retried, dropped and duplicate hits per day with a verdict (Pro adds JS errors). |
+| `get_tracking_health` | `days` | Late, retried, dropped and duplicate hits per day with a verdict (Pro adds JS errors). `beacon_refused` (0.40.7) is set when something refuses visitors' tracking requests — a security plugin restricting the REST API or a server rule — with status, code, message, the likely plugin and what to allow; check it first when visitors drop to near zero. |
 | `get_site_brief` | dates or `period` (default last 7 days), `compare` | One-call status report: people-only traffic with changes, automated traffic filtered, channels, top pages and referrers, unusual days with explanations, tracking health, annotations; Pro adds conversions, search totals and opportunities. |
 | `get_automated_traffic` | dates | What the automated-traffic filter removed: views, visitors, share, series, reasons, countries, pages, referrers. |
 | `get_visit_log` | `automated` (all/yes/no), `limit`, `offset` | Last ~48 h of visitor-days with automation score and signals. |
